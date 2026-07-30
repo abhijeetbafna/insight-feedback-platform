@@ -1,0 +1,537 @@
+/* InSight Central Dashboard — Ant Design System Design Revamp */
+:root {
+  /* Ant Design 5.0 Color Palette Tokens */
+  --ant-primary: #1677FF;
+  --ant-primary-hover: #4096FF;
+  --ant-primary-active: #0958D9;
+  --ant-primary-bg: #E6F4FF;
+  --ant-primary-border: #91CAFF;
+
+  --ant-success: #52C41A;
+  --ant-success-bg: #F6FFED;
+  --ant-success-border: #B7EB8F;
+
+  --ant-warning: #FAAD14;
+  --ant-warning-bg: #FFFBE6;
+  --ant-warning-border: #FFE58F;
+
+  --ant-error: #FF4D4F;
+  --ant-error-bg: #FFF2F0;
+  --ant-error-border: #FFCCC7;
+
+  --ant-info: #1677FF;
+  --ant-info-bg: #E6F4FF;
+
+  /* Neutral Dark Theme (Ant Design Pro / Dark Mode) */
+  --bg-layout: #141414;
+  --bg-container: #1F1F1F;
+  --bg-elevated: #1F1F1F;
+  --bg-spotlight: #262626;
+  --border-color-split: #303030;
+  --border-color-base: #424242;
+  --text-main: rgba(255, 255, 255, 0.85);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  --sider-bg: #001529;
+  --header-bg: #141414;
+  --table-header-bg: #1D1D1D;
+  --table-row-hover: #262626;
+  --box-shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 6px -1px rgba(0, 0, 0, 0.2);
+  --box-shadow-drawer: -6px 0 16px 0 rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] {
+  --bg-layout: #F5F5F5;
+  --bg-container: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-spotlight: #FAFAFA;
+  --border-color-split: #F0F0F0;
+  --border-color-base: #D9D9D9;
+  --text-main: rgba(0, 0, 0, 0.88);
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --text-tertiary: rgba(0, 0, 0, 0.45);
+  --sider-bg: #001529;
+  --header-bg: #FFFFFF;
+  --table-header-bg: #FAFAFA;
+  --table-row-hover: #FAF0F6;
+  --box-shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --box-shadow-drawer: -6px 0 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+}
+
+body {
+  background-color: var(--bg-layout);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 1.5715;
+}
+
+/* Ant Design Header Layout */
+.ant-header {
+  height: 56px;
+  line-height: 56px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color-split);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.ant-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+.ant-brand-logo {
+  width: 32px;
+  height: 32px;
+  background: var(--ant-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(22, 119, 255, 0.35);
+}
+
+.ant-brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.ant-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Ant Design Select Input */
+.ant-select {
+  height: 32px;
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-base);
+  border-radius: 6px;
+  color: var(--text-main);
+  padding: 0 11px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ant-select:hover, .ant-select:focus {
+  border-color: var(--ant-primary);
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2);
+}
+
+/* Ant Design Button */
+.ant-btn {
+  height: 32px;
+  padding: 4px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border: 1px solid var(--border-color-base);
+  background: var(--bg-container);
+  color: var(--text-main);
+  line-height: 1.5715;
+}
+
+.ant-btn:hover {
+  color: var(--ant-primary);
+  border-color: var(--ant-primary);
+}
+
+.ant-btn-primary {
+  background: var(--ant-primary);
+  border-color: var(--ant-primary);
+  color: #FFF;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.ant-btn-primary:hover {
+  background: var(--ant-primary-hover);
+  border-color: var(--ant-primary-hover);
+  color: #FFF;
+}
+
+.ant-btn-danger {
+  background: var(--ant-error);
+  border-color: var(--ant-error);
+  color: #FFF;
+}
+
+.ant-btn-danger:hover {
+  background: #FF7875;
+  border-color: #FF7875;
+  color: #FFF;
+}
+
+/* Ant Design Layout Grid */
+.ant-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Ant Design Sider */
+.ant-sider {
+  width: 230px;
+  background: var(--sider-bg);
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.ant-menu-item {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ant-menu-item:hover {
+  color: #FFF;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  background: var(--ant-primary);
+  color: #FFF;
+  font-weight: 600;
+}
+
+/* Ant Design Content Container */
+.ant-content {
+  flex: 1;
+  padding: 24px;
+  max-width: 1440px;
+}
+
+/* Ant Design Card */
+.ant-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-split);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow-card);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ant-card-head {
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color-split);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Stats Metric Cards */
+.ant-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ant-stat-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-split);
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: var(--box-shadow-card);
+}
+
+.ant-stat-title {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.ant-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Ant Design Filter Toolbar */
+.ant-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ant-input-affix-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+
+.ant-input {
+  width: 100%;
+  height: 32px;
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-base);
+  border-radius: 6px;
+  padding: 4px 11px 4px 32px;
+  color: var(--text-main);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ant-input:focus {
+  border-color: var(--ant-primary);
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2);
+}
+
+.ant-input-prefix {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+/* Ant Design Table */
+.ant-table-wrapper {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-split);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--box-shadow-card);
+}
+
+.ant-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ant-table th {
+  background: var(--table-header-bg);
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color-split);
+}
+
+.ant-table td {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--border-color-split);
+}
+
+.ant-table tbody tr {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ant-table tbody tr:hover {
+  background: var(--table-row-hover);
+}
+
+/* Ant Design Tags & Badges */
+.ant-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.ant-tag-success {
+  background: var(--ant-success-bg);
+  border-color: var(--ant-success-border);
+  color: #389E0D;
+}
+
+.ant-tag-warning {
+  background: var(--ant-warning-bg);
+  border-color: var(--ant-warning-border);
+  color: #D48806;
+}
+
+.ant-tag-error {
+  background: var(--ant-error-bg);
+  border-color: var(--ant-error-border);
+  color: #CF1322;
+}
+
+.ant-tag-processing {
+  background: var(--ant-primary-bg);
+  border-color: var(--ant-primary-border);
+  color: #0958D9;
+}
+
+.ant-tag-purple {
+  background: #F9F0FF;
+  border-color: #D3ADF7;
+  color: #531DAB;
+}
+
+.ant-badge-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Ant Design Kanban Board */
+.ant-kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.ant-kanban-col {
+  background: var(--bg-spotlight);
+  border: 1px solid var(--border-color-split);
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 520px;
+}
+
+.ant-kanban-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color-split);
+}
+
+.ant-kanban-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ant-kanban-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color-split);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.ant-kanban-card:hover {
+  border-color: var(--ant-primary);
+  box-shadow: 0 4px 12px rgba(22, 119, 255, 0.15);
+}
+
+/* Ant Design Drawer Modal */
+.ant-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.ant-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ant-drawer-wrapper {
+  width: 600px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--bg-container);
+  border-left: 1px solid var(--border-color-split);
+  box-shadow: var(--box-shadow-drawer);
+  padding: 24px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ant-drawer-backdrop.open .ant-drawer-wrapper {
+  transform: translateX(0);
+}
+
+.ant-descriptions {
+  background: var(--bg-spotlight);
+  border: 1px solid var(--border-color-split);
+  border-radius: 6px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ant-descriptions-item label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  display: block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.ant-descriptions-item span {
+  font-size: 13px;
+  font-weight: 500;
+}

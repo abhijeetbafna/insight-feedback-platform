@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InSight — Ant Design Feedback & Bug Platform</title>
+
+  <!-- Ant Design System Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="dark">
+
+  <!-- Ant Design Header -->
+  <header class="ant-header">
+    <a href="#" class="ant-brand">
+      <div class="ant-brand-logo">👁️</div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="ant-brand-title">InSight</span>
+        <span class="ant-tag ant-tag-processing" style="font-size: 11px;">ANT DESIGN SYSTEM</span>
+      </div>
+    </a>
+
+    <div class="ant-header-actions">
+      <select class="ant-select" id="projectSelectHeader">
+        <option value="ALL">🌐 All Projects (3)</option>
+      </select>
+
+      <button class="ant-btn" id="themeToggleBtn" title="Toggle Light / Dark Theme">🌙 Dark</button>
+    </div>
+  </header>
+
+  <!-- Ant Design Main Layout -->
+  <div class="ant-layout">
+    
+    <!-- Ant Design Sider Menu -->
+    <aside class="ant-sider">
+      <div class="ant-menu-item ant-menu-item-selected" data-tab="inbox">
+        <span>📥</span> Inbox & Backlog
+      </div>
+      <div class="ant-menu-item" data-tab="kanban">
+        <span>📊</span> Kanban Board
+      </div>
+      <div class="ant-menu-item" data-tab="projects">
+        <span>⚙️</span> Projects & Embed Code
+      </div>
+      <div class="ant-menu-item" data-tab="webhooks">
+        <span>🔗</span> Webhooks & Export
+      </div>
+      <div class="ant-menu-item" data-tab="sandbox">
+        <span>🧪</span> Live Demo Sandbox
+      </div>
+    </aside>
+
+    <!-- Content View Area -->
+    <main class="ant-content">
+      
+      <!-- 1. Inbox Section -->
+      <section id="section-inbox" class="view-section">
+        <!-- Metric Cards -->
+        <div class="ant-stats-grid">
+          <div class="ant-stat-card">
+            <div class="ant-stat-title">TOTAL SUBMISSIONS</div>
+            <div class="ant-stat-value" id="statTotal" style="color: var(--ant-primary);">0</div>
+          </div>
+          <div class="ant-stat-card">
+            <div class="ant-stat-title">OPEN BUGS</div>
+            <div class="ant-stat-value" id="statBugs" style="color: var(--ant-error);">0</div>
+          </div>
+          <div class="ant-stat-card">
+            <div class="ant-stat-title">FEATURE REQUESTS</div>
+            <div class="ant-stat-value" id="statRequests" style="color: var(--ant-warning);">0</div>
+          </div>
+          <div class="ant-stat-card">
+            <div class="ant-stat-title">PRAISE HIGHLIGHTS</div>
+            <div class="ant-stat-value" id="statPraise" style="color: var(--ant-success);">0</div>
+          </div>
+        </div>
+
+        <!-- Toolbar Filters -->
+        <div class="ant-toolbar">
+          <div class="ant-input-affix-wrapper">
+            <span class="ant-input-prefix">🔍</span>
+            <input type="text" class="ant-input" id="searchInput" placeholder="Filter feedback, components, reporters, IDs...">
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <select class="ant-select" id="filterCategorySelect">
+              <option value="ALL">All Categories</option>
+              <option value="liked">👍 Praise (Liked)</option>
+              <option value="improvement">🛠️ Improvement</option>
+              <option value="bug">🐛 Bug Report</option>
+              <option value="feature_request">💡 Feature Request</option>
+            </select>
+
+            <select class="ant-select" id="filterStatusSelect">
+              <option value="ALL">All Statuses</option>
+              <option value="new">New</option>
+              <option value="in_review">In Review</option>
+              <option value="planned">Planned</option>
+              <option value="in_progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="wont_fix">Won't Fix</option>
+            </select>
+
+            <select class="ant-select" id="filterReleaseSelect">
+              <option value="ALL">All Releases</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="ant-table-wrapper">
+          <table class="ant-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Feedback & Target Component</th>
+                <th>Status</th>
+                <th>Reporter</th>
+                <th>Release</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="inboxTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2. Kanban Board Section -->
+      <section id="section-kanban" class="view-section" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <h2 style="font-size: 18px; font-weight: 600;">Feedback Kanban Workflow</h2>
+          <p style="font-size: 13px; color: var(--text-tertiary);">Track development status across releases</p>
+        </div>
+
+        <div class="ant-kanban-grid">
+          <div class="ant-kanban-col" id="kanban-col-new">
+            <div class="ant-kanban-header">
+              <span class="ant-kanban-title" style="color: #1677FF;">🔵 NEW</span>
+              <span class="ant-tag col-count">0</span>
+            </div>
+            <div class="kanban-cards-container"></div>
+          </div>
+
+          <div class="ant-kanban-col" id="kanban-col-in_review">
+            <div class="ant-kanban-header">
+              <span class="ant-kanban-title" style="color: #FAAD14;">🟡 IN REVIEW</span>
+              <span class="ant-tag col-count">0</span>
+            </div>
+            <div class="kanban-cards-container"></div>
+          </div>
+
+          <div class="ant-kanban-col" id="kanban-col-planned">
+            <div class="ant-kanban-header">
+              <span class="ant-kanban-title" style="color: #722ED1;">🟣 PLANNED</span>
+              <span class="ant-tag col-count">0</span>
+            </div>
+            <div class="kanban-cards-container"></div>
+          </div>
+
+          <div class="ant-kanban-col" id="kanban-col-in_progress">
+            <div class="ant-kanban-header">
+              <span class="ant-kanban-title" style="color: #13C2C2;">⚡ IN PROGRESS</span>
+              <span class="ant-tag col-count">0</span>
+            </div>
+            <div class="kanban-cards-container"></div>
+          </div>
+
+          <div class="ant-kanban-col" id="kanban-col-resolved">
+            <div class="ant-kanban-header">
+              <span class="ant-kanban-title" style="color: #52C41A;">🟢 RESOLVED</span>
+              <span class="ant-tag col-count">0</span>
+            </div>
+            <div class="kanban-cards-container"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Projects & Embed Code Section -->
+      <section id="section-projects" class="view-section" style="display: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-size: 18px; font-weight: 600;">Product Projects & Snippets</h2>
+            <p style="font-size: 13px; color: var(--text-tertiary);">Manage project keys and widget embed configurations</p>
+          </div>
+          <button class="ant-btn ant-btn-primary" id="btnCreateProject">+ New Project</button>
+        </div>
+
+        <div id="projectListContainer"></div>
+
+        <div class="ant-card" style="margin-top: 20px;">
+          <div class="ant-card-head">
+            <div class="ant-card-head-title">Single-Line HTML Embed Snippet</div>
+          </div>
+          <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 12px;">Add this script tag to any internal application page:</p>
+          <pre id="embedSnippetBox" style="background: #000; border: 1px solid var(--border-color-split); padding: 14px; border-radius: 6px; font-family: monospace; font-size: 12px; color: #52C41A; overflow-x: auto;">&lt;script src="d:/Feedback Tool/insight-widget.js" data-project-key="PRJ-ANALYTICS" data-release-version="v2.4.1-beta" data-color="#1677FF" data-position="bottom-right"&gt;&lt;/script&gt;</pre>
+          <button class="ant-btn ant-btn-primary" id="copySnippetBtn" style="margin-top: 12px;">📋 Copy Script Tag</button>
+        </div>
+      </section>
+
+      <!-- 4. Webhooks & Export Section -->
+      <section id="section-webhooks" class="view-section" style="display: none;">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 18px; font-weight: 600;">Data Export & Webhook Integration</h2>
+          <p style="font-size: 13px; color: var(--text-tertiary);">Export CSV files or trigger webhooks for Slack and Jira</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+          <div class="ant-card">
+            <div class="ant-card-head">
+              <div class="ant-card-head-title">📊 CSV Data Exporter</div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;">Download a structured CSV dataset of all active filtered submissions.</p>
+            <button class="ant-btn ant-btn-primary" id="btnExportCSV">⬇️ Export Submissions CSV</button>
+          </div>
+
+          <div class="ant-card">
+            <div class="ant-card-head">
+              <div class="ant-card-head-title">🔗 Webhook Payload Simulator</div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;">Preview outbound notification JSON payload.</p>
+            <button class="ant-btn ant-btn-primary" id="btnTestWebhook">⚡ Trigger Test Webhook</button>
+            <pre id="webhookOutput" style="background: #000; border: 1px solid var(--border-color-split); padding: 12px; border-radius: 6px; font-family: monospace; font-size: 11px; color: #1677FF; margin-top: 12px; max-height: 160px; overflow-y: auto;">Click 'Trigger Test Webhook' to simulate...</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Sandbox Section -->
+      <section id="section-sandbox" class="view-section" style="display: none;">
+        <div style="margin-bottom: 16px;">
+          <h2 style="font-size: 18px; font-weight: 600;">Live Interactive Sandbox</h2>
+          <p style="font-size: 13px; color: var(--text-tertiary);">Test the widget on a live host page with element inspection, screenshot annotation, and screen recording</p>
+        </div>
+
+        <div class="ant-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid var(--border-color-split);">
+            <div>
+              <strong>Sample Internal Host App:</strong>
+              <span class="ant-tag ant-tag-processing" style="margin-left: 8px;">Acme Revenue Hub (v2.4.1-beta)</span>
+            </div>
+            <span class="ant-tag ant-tag-success">🟢 Widget Embedded & Active</span>
+          </div>
+
+          <div style="background: var(--bg-spotlight); border-radius: 8px; border: 1px solid var(--border-color-split); padding: 20px; margin-top: 16px;">
+            <header style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: var(--bg-container); padding: 12px 16px; border-radius: 6px; border: 1px solid var(--border-color-split);" data-component="Analytics Navigation Header">
+              <div style="font-weight: 600; font-size: 15px; color: var(--text-main);">📈 Acme Revenue & Growth Hub</div>
+              <div style="display: flex; gap: 8px;">
+                <button class="ant-btn" data-component="Date Range Picker">📅 Q3 2026</button>
+                <button class="ant-btn ant-btn-primary" data-component="Export PDF Button">📥 Export PDF</button>
+              </div>
+            </header>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px;">
+              <div style="background: var(--bg-container); border: 1px solid var(--border-color-split); border-radius: 6px; padding: 16px;" data-component="Monthly Recurring Revenue Card">
+                <div style="font-size: 12px; color: var(--text-tertiary);">Monthly Recurring Revenue (MRR)</div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--ant-success); margin-top: 4px;">$284,500</div>
+              </div>
+              <div style="background: var(--bg-container); border: 1px solid var(--border-color-split); border-radius: 6px; padding: 16px;" data-component="Customer Churn Card">
+                <div style="font-size: 12px; color: var(--text-tertiary);">Net Churn Rate</div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--ant-warning); margin-top: 4px;">1.8%</div>
+              </div>
+              <div style="background: var(--bg-container); border: 1px solid var(--border-color-split); border-radius: 6px; padding: 16px;" data-component="Enterprise Seats Card">
+                <div style="font-size: 12px; color: var(--text-tertiary);">Active Enterprise Seats</div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--ant-primary); margin-top: 4px;">12,490</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Detail Drawer -->
+  <div class="ant-drawer-backdrop" id="drawerBackdrop">
+    <div class="ant-drawer-wrapper">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <h3 style="font-size: 16px; font-weight: 600;" id="drawerTitle">SUB-000000</h3>
+        <button class="close-btn" id="closeDrawerBtn">✕</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="ant-tag ant-tag-processing" id="drawerCategoryBadge">BUG</span>
+        
+        <select class="ant-select" id="drawerStatusSelect" style="height: 28px; font-size: 12px;">
+          <option value="new">NEW</option>
+          <option value="in_review">IN REVIEW</option>
+          <option value="planned">PLANNED</option>
+          <option value="in_progress">IN PROGRESS</option>
+          <option value="resolved">RESOLVED</option>
+          <option value="wont_fix">WON'T FIX</option>
+        </select>
+
+        <select class="ant-select" id="drawerAssigneeSelect" style="height: 28px; font-size: 12px;">
+          <option value="Unassigned">Unassigned</option>
+          <option value="Product Manager">Product Manager</option>
+          <option value="Dev Team Lead">Dev Team Lead</option>
+          <option value="UI Designer">UI Designer</option>
+        </select>
+      </div>
+
+      <div style="background: var(--bg-spotlight); border: 1px solid var(--border-color-split); border-radius: 6px; padding: 14px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 4px;">Feedback Commentary</div>
+        <div id="drawerCommentText" style="font-size: 13.5px; line-height: 1.5; color: var(--text-main);">
+          Comment content...
+        </div>
+      </div>
+
+      <div id="drawerMediaContainer" style="display: none;"></div>
+
+      <div style="background: var(--bg-spotlight); border: 1px solid var(--border-color-split); border-radius: 6px; padding: 14px;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--ant-primary); text-transform: uppercase; margin-bottom: 10px;">
+          🖥️ Technical Metadata & Context
+        </div>
+        <div class="ant-descriptions">
+          <div class="ant-descriptions-item">
+            <label>Target Component</label>
+            <span id="drawerComponentSpan">Header</span>
+          </div>
+          <div class="ant-descriptions-item">
+            <label>DOM Selector</label>
+            <span id="drawerSelectorSpan" style="font-family: monospace; color: var(--ant-success);">#component</span>
+          </div>
+          <div class="ant-descriptions-item">
+            <label>Reporter</label>
+            <span id="drawerReporterSpan">User Name</span>
+          </div>
+          <div class="ant-descriptions-item">
+            <label>Release Tag</label>
+            <span id="drawerReleaseSpan" style="color: var(--ant-primary);">v2.4.1-beta</span>
+          </div>
+          <div class="ant-descriptions-item" style="grid-column: span 2;">
+            <label>Page URL</label>
+            <span id="drawerUrlSpan" style="word-break: break-all; color: var(--ant-primary);">https://...</span>
+          </div>
+          <div class="ant-descriptions-item">
+            <label>Browser</label>
+            <span id="drawerBrowserSpan">Chrome</span>
+          </div>
+          <div class="ant-descriptions-item">
+            <label>OS & Viewport</label>
+            <span id="drawerOsSpan">Windows</span>
+          </div>
+          <div class="ant-descriptions-item" style="grid-column: span 2;">
+            <label>Submission Time</label>
+            <span id="drawerTimeSpan">Timestamp</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="insight-widget.js" data-project-key="PRJ-ANALYTICS" data-release-version="v2.4.1-beta"></script>
+  <script src="app.js"></script>
+</body>
+</html>
