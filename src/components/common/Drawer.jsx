@@ -39,14 +39,44 @@ export function Drawer({
 
   return (
     <div
-      className={`ant-drawer-backdrop ${isOpen ? 'active' : ''}`}
+      className={`ant-drawer-mask ant-drawer-backdrop ${isOpen ? 'active' : ''}`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
       role="dialog"
       aria-label="Submission Details Drawer"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(15, 23, 42, 0.65)',
+        backdropFilter: 'blur(4px)',
+        WebkitBackdropFilter: 'blur(4px)',
+        zIndex: 9999,
+        display: isOpen ? 'block' : 'none'
+      }}
     >
-      <div className="ant-drawer-wrapper">
+      <div
+        className="ant-drawer ant-drawer-wrapper"
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: '90%',
+          maxWidth: 620,
+          background: 'var(--bg-container)',
+          borderLeft: '1px solid var(--border-color)',
+          boxShadow: '-10px 0 30px rgba(0, 0, 0, 0.35)',
+          zIndex: 10000,
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'auto',
+          padding: 24
+        }}
+      >
         {/* Drawer Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
