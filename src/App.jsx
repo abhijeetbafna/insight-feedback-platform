@@ -24,14 +24,15 @@ import { SandboxView } from './features/sandbox/SandboxView.jsx';
 
 export function App() {
   const { isDark, toggleTheme } = useTheme();
-  const { projects, selectedProjectKey, setSelectedProjectKey, addProject, generateEmbedSnippet } =
-    useProjects();
+  const { projects, addProject, generateEmbedSnippet } = useProjects();
 
   const {
     submissions,
     filteredSubmissions,
     stats,
     releases,
+    selectedProjectKey,
+    setSelectedProjectKey,
     activeCategoryFilter,
     setActiveCategoryFilter,
     activeStatusFilter,

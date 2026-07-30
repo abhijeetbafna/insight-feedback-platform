@@ -545,8 +545,8 @@ body {
   font-weight: 500;
 }
 
-/* Kanban Board Columns */
-.ant-kanban-board {
+/* Kanban Board Columns (HeroUI v3 / NextUI Inspired) */
+.ant-kanban-board, .ant-kanban-grid {
   display: flex;
   gap: 16px;
   overflow-x: auto;
@@ -559,29 +559,38 @@ body {
   min-width: 280px;
   background: var(--bg-spotlight);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 14px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  gap: 12px;
   max-height: calc(100vh - 150px);
+  overflow: hidden;
 }
 
-.ant-kanban-col-header {
+.ant-kanban-col-header, .ant-kanban-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
   font-weight: 700;
   color: var(--text-main);
-  padding-bottom: 10px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border-color);
+  background: var(--bg-container);
 }
 
-.ant-kanban-card {
+.kanban-cards-container {
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.ant-kanban-card, .kanban-card {
   background: var(--bg-container);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   padding: 14px;
   box-shadow: var(--shadow-sm);
   cursor: pointer;
@@ -591,7 +600,7 @@ body {
   gap: 8px;
 }
 
-.ant-kanban-card:hover {
+.ant-kanban-card:hover, .kanban-card:hover {
   border-color: var(--border-color-split);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
