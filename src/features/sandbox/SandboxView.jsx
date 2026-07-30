@@ -207,48 +207,45 @@ export function SandboxView({ onShowToast }) {
               marginBottom: 28
             }}
           >
-            <div
-              className="ant-card"
-              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)' }}
-            >
-              <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Monthly Recurring Revenue
-              </div>
-              <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 6 }}>
-                $184,290.00
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--ant-success)', marginTop: 4, fontWeight: 600 }}>
-                ↑ 14.2% vs last month
-              </div>
-            </div>
-
-            <div
-              className="ant-card"
-              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)' }}
-            >
-              <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Active Enterprise Teams
-              </div>
-              <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 6 }}>
-                1,429
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--ant-primary)', marginTop: 4, fontWeight: 600 }}>
-                +84 net new accounts
+            <div className="ant-card" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="ant-card-body" style={{ padding: '20px 22px' }}>
+                <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Monthly Recurring Revenue
+                </div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 8 }}>
+                  $184,290.00
+                </div>
+                <div style={{ fontSize: 12.5, color: 'var(--ant-success)', marginTop: 6, fontWeight: 600 }}>
+                  ↑ 14.2% vs last month
+                </div>
               </div>
             </div>
 
-            <div
-              className="ant-card"
-              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)' }}
-            >
-              <div style={{ fontSize: 11, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Checkout Conversion Rate
+            <div className="ant-card" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="ant-card-body" style={{ padding: '20px 22px' }}>
+                <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Active Enterprise Teams
+                </div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 8 }}>
+                  1,429
+                </div>
+                <div style={{ fontSize: 12.5, color: 'var(--ant-primary)', marginTop: 6, fontWeight: 600 }}>
+                  +84 net new accounts
+                </div>
               </div>
-              <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 6 }}>
-                68.4%
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--ant-warning)', marginTop: 4, fontWeight: 600 }}>
-                ⚡ Checkout Modal SLA Ok
+            </div>
+
+            <div className="ant-card" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="ant-card-body" style={{ padding: '20px 22px' }}>
+                <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Checkout Conversion Rate
+                </div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text-main)', marginTop: 8 }}>
+                  68.4%
+                </div>
+                <div style={{ fontSize: 12.5, color: 'var(--ant-warning)', marginTop: 6, fontWeight: 600 }}>
+                  ⚡ Checkout Modal SLA Ok
+                </div>
               </div>
             </div>
           </div>

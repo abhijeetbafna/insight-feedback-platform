@@ -485,6 +485,10 @@ body {
   flex-direction: column;
 }
 
+.ant-card:not(:has(.ant-card-head)):not(:has(.ant-card-body)) {
+  padding: 20px;
+}
+
 .ant-card:hover {
   border-color: var(--border-color-split);
   box-shadow: var(--shadow-md);
