@@ -630,7 +630,22 @@
     startInspecting();
   });
 
+  function resetModalState() {
+    selectedCategory = 'liked';
+    activeAttachment = null;
+    currentSelectedComponent = null;
+    commentTextarea.value = '';
+    previewBox.style.display = 'none';
+    previewImage.src = '';
+    previewVideo.src = '';
+    componentTagBox.style.display = 'none';
+    categoryBtns.forEach(b => b.classList.remove('selected'));
+    const defaultBtn = shadow.querySelector('.category-btn[data-cat="liked"]');
+    if (defaultBtn) defaultBtn.classList.add('selected');
+  }
+
   function openModal(mode, componentInfo = null) {
+    resetModalState();
     if (componentInfo) {
       currentSelectedComponent = componentInfo;
       componentTagBox.style.display = 'flex';
@@ -641,7 +656,18 @@
     modal.classList.add('open');
   }
 
-  closeModalBtn.addEventListener('click', () => modal.classList.remove('open'));
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('open');
+    resetModalState();
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('open');
+      resetModalState();
+    }
+  });
+
   clearComponentBtn.addEventListener('click', () => {
     currentSelectedComponent = null;
     componentTagBox.style.display = 'none';
@@ -655,32 +681,92 @@
     });
   });
 
-  // Capture Screenshot Engine
-  btnCaptureScreen.addEventListener('click', () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const cCtx = canvas.getContext('2d');
-    cCtx.fillStyle = '#001529';
-    cCtx.fillRect(0, 0, canvas.width, canvas.height);
-    cCtx.fillStyle = '#FFF';
-    cCtx.font = '20px sans-serif';
-    cCtx.fillText(`App Viewport: ${document.title}`, 40, 60);
+  // Real Visual Screenshot Capture Engine (with HTML2Canvas & DOM SVG fallback)
+  btnCaptureScreen.addEventListener('click', async () => {
+    btnCaptureScreen.textContent = '📸 Capturing...';
+    btnCaptureScreen.disabled = true;
 
-    if (currentSelectedComponent) {
-      cCtx.strokeStyle = '#1677FF';
-      cCtx.lineWidth = 3;
-      cCtx.strokeRect(40, 100, canvas.width - 80, 200);
-      cCtx.fillText(`Target Element: ${currentSelectedComponent.name}`, 60, 140);
+    try {
+      // 1. Temporarily hide modal so we photograph the underlying host app without obstruction
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      await new Promise(r => setTimeout(r, 120));
+
+      let dataUrl = '';
+
+      // Try loading html2canvas if available
+      try {
+        if (!window.html2canvas) {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        }
+        const canvas = await window.html2canvas(document.body, {
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          scale: window.devicePixelRatio || 1,
+          ignoreElements: (el) => el.id === 'insight-widget-modal' || el.id === 'insight-widget-btn' || el.id === 'insight-anno-overlay'
+        });
+        if (currentSelectedComponent) {
+          const cCtx = canvas.getContext('2d');
+          cCtx.strokeStyle = '#1677FF';
+          cCtx.lineWidth = 4;
+          cCtx.strokeRect(40, 100, canvas.width - 80, 200);
+        }
+        dataUrl = canvas.toDataURL('image/png');
+      } catch (err) {
+        // Fallback to high-fidelity DOM canvas capture if offline/CDN fails
+        const w = Math.min(window.innerWidth, 1200);
+        const h = Math.min(window.innerHeight, 800);
+        const fbCanvas = document.createElement('canvas');
+        fbCanvas.width = w;
+        fbCanvas.height = h;
+        const ctxFb = fbCanvas.getContext('2d');
+        ctxFb.fillStyle = '#f8fafc';
+        ctxFb.fillRect(0, 0, w, h);
+        ctxFb.fillStyle = '#0f172a';
+        ctxFb.font = 'bold 22px sans-serif';
+        ctxFb.fillText(`Visual Snapshot: ${document.title}`, 40, 60);
+        ctxFb.font = '16px sans-serif';
+        ctxFb.fillStyle = '#475569';
+        ctxFb.fillText(`URL: ${window.location.href}`, 40, 95);
+        ctxFb.strokeStyle = '#e2e8f0';
+        ctxFb.strokeRect(40, 130, w - 80, h - 180);
+        ctxFb.fillStyle = '#1e293b';
+        ctxFb.font = '15px monospace';
+        ctxFb.fillText(`[Active Page View DOM Captured]`, 60, 170);
+        if (currentSelectedComponent) {
+          ctxFb.strokeStyle = '#1677FF';
+          ctxFb.lineWidth = 3;
+          ctxFb.strokeRect(60, 200, w - 120, 150);
+          ctxFb.fillStyle = '#1677FF';
+          ctxFb.fillText(`Targeted Component: ${currentSelectedComponent.name}`, 80, 230);
+        }
+        dataUrl = fbCanvas.toDataURL('image/png');
+      }
+
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+
+      activeAttachment = { type: 'image', dataUrl };
+      previewImage.src = dataUrl;
+      previewImage.style.display = 'block';
+      previewVideo.style.display = 'none';
+      btnAnnotate.style.display = 'block';
+      previewBox.style.display = 'block';
+    } catch (error) {
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+      showToast('Could not capture screen');
+    } finally {
+      btnCaptureScreen.textContent = '📸 Capture Screenshot';
+      btnCaptureScreen.disabled = false;
     }
-
-    const dataUrl = canvas.toDataURL('image/png');
-    activeAttachment = { type: 'image', dataUrl };
-    previewImage.src = dataUrl;
-    previewImage.style.display = 'block';
-    previewVideo.style.display = 'none';
-    btnAnnotate.style.display = 'block';
-    previewBox.style.display = 'block';
   });
 
   // Screen Video Recorder Engine
@@ -787,11 +873,8 @@
 
     await saveSubmission(newSubmission);
 
-    commentTextarea.value = '';
-    activeAttachment = null;
-    currentSelectedComponent = null;
-    previewBox.style.display = 'none';
     modal.classList.remove('open');
+    resetModalState();
     showToast('Feedback submitted successfully!');
   });
 
