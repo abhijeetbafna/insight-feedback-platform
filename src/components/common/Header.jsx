@@ -11,7 +11,8 @@ export function Header({
   isDark,
   onToggleTheme,
   onOpenProfile,
-  onShowToast
+  onShowToast,
+  currentUser
 }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -115,19 +116,19 @@ export function Header({
                 width: 28,
                 height: 28,
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #38bdf8, #818cf8)',
+                background: currentUser?.color || 'linear-gradient(135deg, #1677ff, #722ed1)',
                 color: '#fff',
                 fontSize: 12,
                 fontWeight: 800,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 2px 6px rgba(56, 189, 248, 0.3)'
+                boxShadow: '0 2px 6px rgba(22, 119, 255, 0.3)'
               }}
             >
-              AC
+              {currentUser?.initials || 'AC'}
             </div>
-            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-main)' }}>Alex Chen</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-main)' }}>{currentUser?.name || 'Alex Chen'}</span>
             <span style={{ fontSize: 10, color: 'var(--text-tertiary)' }}>▼</span>
           </button>
 
@@ -140,8 +141,6 @@ export function Header({
                 right: 0,
                 width: 260,
                 background: 'var(--bg-container)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
                 border: '1px solid var(--border-color)',
                 borderRadius: 'var(--radius-md)',
                 boxShadow: 'var(--shadow-lg)',
@@ -156,14 +155,14 @@ export function Header({
                   marginBottom: 8
                 }}
               >
-                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--text-main)' }}>Alex Chen</div>
-                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>alex.chen@acme.internal</div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--text-main)' }}>{currentUser?.name || 'Alex Chen'}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{currentUser?.email || 'alex.chen@acme.internal'}</div>
                 <div style={{ marginTop: 6 }}>
                   <span
                     className="ant-tag ant-tag-processing"
                     style={{ fontSize: 10, padding: '1px 6px' }}
                   >
-                    Workspace Admin
+                    {currentUser?.role || 'Workspace Admin'}
                   </span>
                 </div>
               </div>
@@ -172,7 +171,7 @@ export function Header({
                 <button
                   onClick={() => {
                     setShowUserMenu(false);
-                    onOpenProfile?.();
+                    onOpenProfile?.('profile');
                   }}
                   className="ant-btn"
                   style={{
@@ -190,7 +189,7 @@ export function Header({
                 <button
                   onClick={() => {
                     setShowUserMenu(false);
-                    onShowToast?.('🏢 Acme Corporation • Pro Enterprise Workspace Tier (10 Seats)', 'info');
+                    onOpenProfile?.('org');
                   }}
                   className="ant-btn"
                   style={{
@@ -208,7 +207,7 @@ export function Header({
                 <button
                   onClick={() => {
                     setShowUserMenu(false);
-                    onShowToast?.('🔑 Production API Token: ins_live_99a8x29b3c4d...', 'info');
+                    onOpenProfile?.('api');
                   }}
                   className="ant-btn"
                   style={{
@@ -228,7 +227,7 @@ export function Header({
                 <button
                   onClick={() => {
                     setShowUserMenu(false);
-                    onShowToast?.('🔒 Signed out simulation. In production, this redirects to SSO / Auth0 login.', 'warning');
+                    onOpenProfile?.('auth');
                   }}
                   className="ant-btn ant-btn-danger"
                   style={{

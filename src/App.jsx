@@ -15,6 +15,7 @@ import { Sidebar } from './components/common/Sidebar.jsx';
 import { Drawer } from './components/common/Drawer.jsx';
 import { Toast } from './components/common/Toast.jsx';
 import { Modal } from './components/common/Modal.jsx';
+import { UserProfileModal } from './components/common/UserProfileModal.jsx';
 
 import { InboxView } from './features/inbox/InboxView.jsx';
 import { KanbanView } from './features/kanban/KanbanView.jsx';
@@ -51,6 +52,15 @@ export function App() {
   const [activeTab, setActiveTab] = useState('inbox');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [profileModalTab, setProfileModalTab] = useState('profile');
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('insight_current_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [toast, setToast] = useState(null);
 
   const showToast = useCallback((message, type = 'success') => {
@@ -78,8 +88,12 @@ export function App() {
         onSelectProject={setSelectedProjectKey}
         isDark={isDark}
         onToggleTheme={toggleTheme}
-        onOpenProfile={() => setIsProfileModalOpen(true)}
+        onOpenProfile={(tab = 'profile') => {
+          setProfileModalTab(tab);
+          setIsProfileModalOpen(true);
+        }}
         onShowToast={showToast}
+        currentUser={currentUser}
       />
 
       {/* Main Layout Area */}
@@ -154,106 +168,20 @@ export function App() {
         }}
       />
 
-      {/* User Profile & Workspace Settings Modal */}
-      <Modal
+      {/* User Profile, Organization, API Keys & Persona Switcher Modal */}
+      <UserProfileModal
         isOpen={isProfileModalOpen}
-        title="Workspace Admin Account & Profile Settings"
+        initialTab={profileModalTab}
         onClose={() => setIsProfileModalOpen(false)}
-        footer={
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-            <button
-              className="ant-btn ant-btn-primary"
-              onClick={() => {
-                setIsProfileModalOpen(false);
-                showToast('User profile settings saved successfully!');
-              }}
-            >
-              Done & Close
-            </button>
-          </div>
-        }
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 16,
-              background: 'var(--bg-elevated)',
-              padding: 16,
-              borderRadius: 10,
-              border: '1px solid var(--border-color)'
-            }}
-          >
-            <div
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #38bdf8, #818cf8)',
-                color: '#fff',
-                fontSize: 20,
-                fontWeight: 800,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}
-            >
-              AC
-            </div>
-            <div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-main)' }}>
-                Alex Chen
-              </div>
-              <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                alex.chen@acme.internal
-              </div>
-              <div style={{ marginTop: 6, display: 'flex', gap: 6 }}>
-                <span className="ant-tag ant-tag-processing" style={{ fontSize: 11 }}>
-                  Workspace Lead
-                </span>
-                <span className="ant-tag ant-tag-purple" style={{ fontSize: 11 }}>
-                  Enterprise Plan
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="ant-descriptions">
-            <div className="ant-descriptions-item">
-              <label>Organization Name</label>
-              <span style={{ fontWeight: 600 }}>Acme Enterprise Cloud</span>
-            </div>
-            <div className="ant-descriptions-item">
-              <label>Role / Permissions</label>
-              <span>Owner & Administrator</span>
-            </div>
-            <div className="ant-descriptions-item">
-              <label>SSO / Auth Method</label>
-              <span>Okta SAML 2.0 / Google Workspace</span>
-            </div>
-            <div className="ant-descriptions-item">
-              <label>Active Seats Used</label>
-              <span>4 / 10 Licensed Seats</span>
-            </div>
-          </div>
-
-          <div
-            style={{
-              background: 'rgba(56, 189, 248, 0.08)',
-              border: '1px solid rgba(56, 189, 248, 0.25)',
-              borderRadius: 8,
-              padding: 14,
-              fontSize: 13,
-              color: 'var(--text-secondary)',
-              lineHeight: 1.5
-            }}
-          >
-            💡 <strong>Production Deployment Note:</strong> In standalone demo mode, profile details and submissions are stored locally in your browser so you can test without external dependencies. When deploying to production, this modal integrates directly with your authentication provider (e.g. Supabase Auth, Auth0, or WorkOS SSO).
-          </div>
-        </div>
-      </Modal>
+        onShowToast={showToast}
+        currentUser={currentUser}
+        onSwitchUser={(u) => {
+          setCurrentUser(u);
+          try {
+            localStorage.setItem('insight_current_user', JSON.stringify(u));
+          } catch {}
+        }}
+      />
 
       {/* Toast Notification */}
       {toast && (
