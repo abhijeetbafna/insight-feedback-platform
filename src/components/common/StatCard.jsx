@@ -20,13 +20,12 @@ export function StatCard({ title, value, color, onClick, isSelected }) {
       }}
       title={`Click to filter by ${title}`}
       style={{
-        transform: isSelected ? 'translateY(-6px)' : undefined,
-        background: isSelected ? 'var(--bg-elevated)' : 'var(--bg-container)',
+        transform: isSelected ? 'translateY(-3px)' : undefined,
+        background: isSelected ? 'var(--bg-spotlight)' : 'var(--bg-container)',
         boxShadow: isSelected
-          ? `0 16px 36px rgba(0, 0, 0, 0.35), 0 0 0 2px ${accentColor}, 0 0 28px ${accentColor}44`
+          ? `0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 0 2px ${accentColor}`
           : undefined,
-        borderTop: isSelected ? `4px solid ${accentColor}` : undefined,
-        borderColor: isSelected ? accentColor : undefined,
+        borderColor: isSelected ? accentColor : 'var(--border-color)',
         transition: 'all 240ms cubic-bezier(0.34, 1.56, 0.64, 1)'
       }}
     >

@@ -92,22 +92,9 @@ export function SandboxView({ onShowToast }) {
   return (
     <section className="view-section">
       {/* Top Description Banner */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(192, 132, 252, 0.12))',
-          border: '1px solid var(--border-glow)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '20px 24px',
-          marginBottom: 24,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 16
-        }}
-      >
+      <div className="ant-alert">
         <div>
-          <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--text-main)', marginBottom: 4 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-main)', marginBottom: 4 }}>
             ⚡ InSight Live Host App Sandbox
           </h2>
           <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', maxWidth: 640 }}>
@@ -116,7 +103,7 @@ export function SandboxView({ onShowToast }) {
         </div>
         <div
           style={{
-            background: 'var(--bg-elevated)',
+            background: 'var(--bg-spotlight)',
             border: '1px solid var(--border-color)',
             borderRadius: 'var(--radius-md)',
             padding: '10px 18px',
@@ -290,7 +277,7 @@ export function SandboxView({ onShowToast }) {
               }}
             >
               <button
-                className="ant-btn"
+                className="ant-sim-card"
                 onClick={() =>
                   handleSimulateInstantFeedback(
                     'bug',
@@ -298,27 +285,18 @@ export function SandboxView({ onShowToast }) {
                     'Checkout Modal Component'
                   )
                 }
-                style={{
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  height: 'auto',
-                  padding: '12px 16px',
-                  background: 'var(--bg-main)',
-                  border: '1px solid rgba(248, 113, 113, 0.3)'
-                }}
               >
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ant-error)' }}>
-                    🐛 Simulate Bug Report
-                  </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', marginTop: 2 }}>
-                    Target: Checkout Modal Component
-                  </div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ant-error)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span>🐛</span>
+                  <span>Simulate Bug Report</span>
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+                  Target: Checkout Modal Component
                 </div>
               </button>
 
               <button
-                className="ant-btn"
+                className="ant-sim-card"
                 onClick={() =>
                   handleSimulateInstantFeedback(
                     'feature_request',
@@ -326,27 +304,18 @@ export function SandboxView({ onShowToast }) {
                     'Billing Table Action Bar'
                   )
                 }
-                style={{
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  height: 'auto',
-                  padding: '12px 16px',
-                  background: 'var(--bg-main)',
-                  border: '1px solid rgba(251, 191, 36, 0.3)'
-                }}
               >
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ant-warning)' }}>
-                    💡 Simulate Feature Request
-                  </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', marginTop: 2 }}>
-                    Target: Billing Table Action Bar
-                  </div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ant-warning)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span>💡</span>
+                  <span>Simulate Feature Request</span>
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+                  Target: Billing Table Action Bar
                 </div>
               </button>
 
               <button
-                className="ant-btn"
+                className="ant-sim-card"
                 onClick={() =>
                   handleSimulateInstantFeedback(
                     'improvement',
@@ -354,27 +323,18 @@ export function SandboxView({ onShowToast }) {
                     'Date Filter Selector'
                   )
                 }
-                style={{
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  height: 'auto',
-                  padding: '12px 16px',
-                  background: 'var(--bg-main)',
-                  border: '1px solid rgba(192, 132, 252, 0.3)'
-                }}
               >
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ant-purple)' }}>
-                    🛠️ Simulate Improvement
-                  </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', marginTop: 2 }}>
-                    Target: Date Filter Selector
-                  </div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ant-purple)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span>🛠️</span>
+                  <span>Simulate Improvement</span>
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+                  Target: Date Filter Selector
                 </div>
               </button>
 
               <button
-                className="ant-btn"
+                className="ant-sim-card"
                 onClick={() =>
                   handleSimulateInstantFeedback(
                     'liked',
@@ -382,22 +342,13 @@ export function SandboxView({ onShowToast }) {
                     'Analytics Dashboard KPI'
                   )
                 }
-                style={{
-                  justifyContent: 'flex-start',
-                  textAlign: 'left',
-                  height: 'auto',
-                  padding: '12px 16px',
-                  background: 'var(--bg-main)',
-                  border: '1px solid rgba(74, 222, 128, 0.3)'
-                }}
               >
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ant-success)' }}>
-                    👍 Simulate Praise Highlight
-                  </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--text-tertiary)', marginTop: 2 }}>
-                    Target: Analytics Dashboard KPI
-                  </div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ant-success)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span>👍</span>
+                  <span>Simulate Praise Highlight</span>
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+                  Target: Analytics Dashboard KPI
                 </div>
               </button>
             </div>

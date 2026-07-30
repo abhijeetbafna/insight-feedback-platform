@@ -472,6 +472,107 @@ body {
   color: #fff;
   border-color: var(--ant-error);
 }
+/* HeroUI v3 / NextUI Enterprise Card System */
+.ant-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.ant-card:hover {
+  border-color: var(--border-color-split);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.ant-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-container);
+  gap: 12px;
+}
+
+.ant-card-head-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.ant-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Code Boxes & Terminal Snippets */
+.ant-code-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #f8fafc;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* HeroUI Alert Banners */
+.ant-alert {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Section Wrapper */
+.view-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* HeroUI Interactive Simulation Cards */
+.ant-sim-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  outline: none;
+  font-family: inherit;
+}
+.ant-sim-card:hover {
+  border-color: var(--ant-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
 
 /* Modal and Drawer (Crisp Surfaces - No Blurry Glassmorphism) */
 .ant-modal-mask, .ant-drawer-mask {

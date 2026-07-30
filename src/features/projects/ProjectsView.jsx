@@ -92,11 +92,6 @@ export function ProjectsView({
           <div
             key={proj.key}
             className="ant-card"
-            style={{
-              position: 'relative',
-              overflow: 'hidden',
-              borderTop: `3px solid ${proj.color}`
-            }}
           >
             <div className="ant-card-head">
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -148,12 +143,7 @@ export function ProjectsView({
       {/* Embed Snippet Generator Card */}
       <div
         className="ant-card"
-        style={{
-          marginTop: 28,
-          background: 'var(--bg-container)',
-          border: '1px solid var(--border-glow)',
-          boxShadow: 'var(--shadow-md)'
-        }}
+        style={{ marginTop: 28 }}
       >
         <div className="ant-card-head">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -178,38 +168,24 @@ export function ProjectsView({
           </div>
         </div>
 
-        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginBottom: 14 }}>
-          Add this script tag inside the <code>&lt;body&gt;</code> of any internal web application to instantly activate the embeddable feedback and bug widget:
-        </p>
+        <div className="ant-card-body">
+          <p style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>
+            Add this script tag inside the <code>&lt;body&gt;</code> of any internal web application to instantly activate the embeddable feedback and bug widget:
+          </p>
 
-        <div
-          style={{
-            position: 'relative',
-            background: 'var(--bg-main)',
-            border: '1px solid var(--border-color-split)',
-            borderRadius: 'var(--radius-md)',
-            padding: '16px 20px',
-            fontFamily: 'monospace',
-            fontSize: 13,
-            lineHeight: 1.6,
-            color: 'var(--ant-success)',
-            overflowX: 'auto',
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-all',
-            boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.4)'
-          }}
-        >
-          {snippetCode}
-        </div>
+          <div className="ant-code-box">
+            {snippetCode}
+          </div>
 
-        <div style={{ marginTop: 16, display: 'flex', justifyContent: 'flex-end' }}>
-          <button
-            className="ant-btn ant-btn-primary"
-            onClick={handleCopySnippet}
-            style={{ height: 38, padding: '0 24px', fontSize: 13.5 }}
-          >
-            📋 Copy Script Tag to Clipboard
-          </button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <button
+              className="ant-btn ant-btn-primary"
+              onClick={handleCopySnippet}
+              style={{ height: 38, padding: '0 24px', fontSize: 13.5 }}
+            >
+              📋 Copy Script Tag to Clipboard
+            </button>
+          </div>
         </div>
       </div>
 
